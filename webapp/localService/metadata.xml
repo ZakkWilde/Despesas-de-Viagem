@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZFIORI_DESPESAS_VIAGEM_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="Despesa" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Reinr"/>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Reinr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false"/>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Personnel No."/>
+                <Property Name="Bukrs" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Company Code"/>
+                <Property Name="Datum" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Datre" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Tpdes" Type="Edm.String" MaxLength="4" sap:unicode="false"/>
+                <Property Name="Descr" Type="Edm.String" MaxLength="150" sap:unicode="false"/>
+                <Property Name="Valor" Type="Edm.Decimal" Precision="14" Scale="3" sap:unicode="false"/>
+                <Property Name="Datva" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Valid" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Datap" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Aprov" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Datrj" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Repro" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Datca" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Cance" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Augdt" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Clearing"/>
+                <Property Name="Status" Type="Edm.String" MaxLength="1" sap:unicode="false"/>
+                <Property Name="Entcov" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Quacov" Type="Edm.String" MaxLength="3" sap:unicode="false"/>
+                <Property Name="Belnr" Type="Edm.String" MaxLength="10" sap:unicode="false"/>
+                <Property Name="Gjahr" Type="Edm.String" MaxLength="4" sap:unicode="false"/>
+            </EntityType>
+            <EntityType Name="Anexo" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Guid"/>
+                </Key>
+                <Property Name="Guid" Type="Edm.Int16" Nullable="false" sap:unicode="false"/>
+                <Property Name="FileName" Type="Edm.String" MaxLength="50" sap:unicode="false"/>
+                <Property Name="Attach" Type="Edm.Binary" sap:unicode="false"/>
+                <Property Name="FileType" Type="Edm.String" MaxLength="20" sap:unicode="false"/>
+                <Property Name="Creaton" Type="Edm.DateTime" Precision="7" sap:unicode="false"/>
+                <Property Name="Creatime" Type="Edm.Time" Precision="0" sap:unicode="false"/>
+                <Property Name="Creatby" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:label="User Name"/>
+            </EntityType>
+            <EntityContainer Name="ZFIORI_DESPESAS_VIAGEM_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="DespesaSet" EntityType="ZFIORI_DESPESAS_VIAGEM_SRV.Despesa" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AnexoSet" EntityType="ZFIORI_DESPESAS_VIAGEM_SRV.Anexo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://anadevfront:2005/sap/opu/odata/sap/ZFIORI_DESPESAS_VIAGEM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://anadevfront:2005/sap/opu/odata/sap/ZFIORI_DESPESAS_VIAGEM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,521 @@
+<mvc:View controllerName="zfioridespesa.controller.Despesa"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
+	xmlns:t="sap.ui.table"
+	xmlns:upload="sap.m.upload">
+        <m:Page title="{i18n>appTitle}" showNavButton="false" navButtonPress=".onNavBack">
+		<l:DynamicSideContent
+			id="DynamicSideContent"
+			class="sapUiDSCExplored"
+			sideContentFallDown="BelowM"
+			sideContentPosition="End"
+			containerQuery="true"
+			showSideContent="false"
+			breakpointChanged="updateToggleButtonState">
+			<l:mainContent>
+				<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
+					<headerTitle>
+						<ObjectPageHeader 
+						    id="headerForTest"
+							objectTitle="{EmployeeView>/KnownAs}"
+							objectSubtitle="{i18n>empPositi}: {EmployeeView>/Jobtxt} {EmployeeView>/Orgtxt}"
+							objectImageShape="Circle"
+							isObjectTitleAlwaysVisible="false"
+							isObjectSubtitleAlwaysVisible="false">
+						</ObjectPageHeader>
+					</headerTitle>
+					<headerContent>
+					    <l:VerticalLayout>
+					        <m:ObjectStatus title="{i18n>empPesNum}" text="{EmployeeView>/Pernr}"/>
+					    </l:VerticalLayout>
+					</headerContent>
+					<sections>
+						<ObjectPageSection titleUppercase="false" title="{i18n>despVaction}">
+							<subSections>
+								<ObjectPageSubSection titleUppercase="false">
+								
+								<f:Form id="form">
+								    <f:title >
+								        <core:Title text="{i18n>despVaction}" />
+								    </f:title>
+								    <f:layout>
+                    				<f:ResponsiveGridLayout
+                    					labelSpanXL="3"
+                    					labelSpanL="2"
+                    					labelSpanM="3"
+                    					labelSpanS="12"
+                    					adjustLabelSpan="false"
+                    					emptySpanXL="4"
+                    					emptySpanL="2"
+                    					emptySpanM="1"
+                    					emptySpanS="0"
+                    					columnsXL="1"
+                    					columnsL="1"
+                    					columnsM="1"
+                    					singleContainerFullSize="false" />
+			                        </f:layout>
+			                        <f:formContainers>
+			                            <f:FormContainer>
+			                                <f:formElements>
+			                                    <f:FormElement label="{i18n>empDesNum}">
+			                                        <f:fields>
+			                                            <m:Input id="reinr" value="{EmployeeView>/Despesa}" enabled="false"/>
+			                                        </f:fields>
+			                                    </f:FormElement>
+			                                    <f:FormElement label="{i18n>formDtDesp}"> 
+							                        <f:fields>
+								                        <m:DatePicker 
+															id="data"
+					                                        placeholder="{i18n>formData}"
+					                                        showFooter="true"
+															required="true"
+															value="{
+																'path':'/Datre',
+																'type':'sap.ui.model.type.Date',
+																'formatOptions': {
+																	'pattern': 'dd-MM-yyyy'
+																}
+															}"/>
+							                        </f:fields>
+						                        </f:FormElement>
+						                        <f:FormElement label="{i18n>formTpDesp}">
+                    							<f:fields>
+                    								<m:Input id="Despesa" 
+															 placeholder="{i18n>formDesp}"
+															 showValueHelp="true"
+															 liveChange=".onChange"
+															 valueHelpRequest=".onValueHelpRequest"
+															 width="auto"
+															 fieldWidth="auto"
+															 type="Number" />
+                    								<!-- <m:Text id="DespesaText" width="200px" /> -->
+                    							</f:fields>
+												</f:FormElement>
+												<f:FormElement label="{i18n>formPCon}">
+													<f:fields>
+														<m:Input id="pessConv" maxLength="50" />
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement label="{i18n>formNCon}">
+													<f:fields>
+														<m:Input id="qtdPess" width="50px" fieldWidth="20%" type="Number"/>
+													</f:fields>
+                    						    </f:FormElement>
+                    						    <f:FormElement label="{i18n>formDescr}" >
+                    							  <f:fields>
+                    								<m:Input id="descr" maxLength="150" />
+                    							  </f:fields>
+                    							  </f:FormElement>
+                    							  <f:FormElement label="{i18n>formValor}" >
+													<f:fields>
+														<m:Input 
+															id="valor"
+															description="{i18n>formUnidade}"
+															width="250px"
+															fieldWidth="80%"
+															type="Number"/>
+													</f:fields>
+                    							  </f:FormElement>
+												  <f:FormElement label="{i18n>formIsent}" >
+													<f:fields>
+														<m:RadioButtonGroup id="GroupA" columns="2" select=".onRadioSel">
+															<m:RadioButton text="{i18n>optTrue}"  />
+															<m:RadioButton text="{i18n>optFalse}" selected="true" />
+														</m:RadioButtonGroup>
+													</f:fields>
+                    							  </f:FormElement>
+												  <f:FormElement label="{i18n>formIva}" >
+													<f:fields>
+														<m:Input 
+															id="iva"
+															placeholder="{i18n>formSelectIva}"
+															showValueHelp="true"
+															valueHelpOnly="true"
+															type="Text"
+															valueHelpRequest=".onHandleValueHelpIVA"
+															width="auto"
+															fieldWidth="auto"
+															required="true" />
+													</f:fields>
+                    							  </f:FormElement>
+                    							  <f:FormElement label="{i18n>formDtReg}">
+                    							      <f:fields>
+                    							          <m:DatePicker
+														  	id="dataReg"
+					                                        placeholder="{i18n>formData}"
+					                                        showFooter="true"
+															enabled="false"
+															value="{
+																'path':'Date>/oDefaultDate',
+																'type':'sap.ui.model.type.Date',
+																'formatOptions': {
+																	'pattern': 'dd-MM-yyyy'
+																}
+															}"/>
+                    							      </f:fields>
+                    							  </f:FormElement>
+												  <f:FormElement label="{i18n>formLocal}" >
+													<m:Select id="local" selectedKey="{LocalDesp}">
+														<m:items>
+															<core:Item text="{i18n>selCont}" key="C"/>
+															<core:Item text="{i18n>selMade}" key="M"/>
+															<core:Item text="{i18n>selAcor}" key="A"/>
+															<core:Item text="{i18n>selInte}" key="I"/>
+														</m:items>
+													</m:Select>
+												  </f:FormElement>
+			                                </f:formElements>
+			                            </f:FormContainer>
+			                        </f:formContainers>
+								</f:Form>
+								</ObjectPageSubSection>
+							</subSections>
+						</ObjectPageSection>
+						
+					    <ObjectPageSection titleUppercase="false" title="{i18n>attachment}">
+						    <subSections>
+						        <ObjectPageSubSection titleUppercase="false">
+								<m:UploadCollection
+										id="UploadCollection"
+										multiple="false"
+										sameFilenameAllowed="true"
+										instantUpload="false"
+										noDataDescription="{i18n>drop}"
+										change="onChange"
+										uploadComplete="onUploadCompleted"
+										beforeUploadStarts="onBeforeUploadStarts"
+										uploadEnabled="true"
+										numberOfAttachmentsText=""
+										uploadUrl="/sap/opu/odata/sap/ZFIORI_DESPESAS_VIAGEM_SRV/AnexoSet"/>
+						        </ObjectPageSubSection>
+						    </subSections>
+						</ObjectPageSection>
+
+						<ObjectPageSection id="listReport" titleUppercase="false" title="{i18n>despList}">
+							<subSections>
+								<ObjectPageSubSection title="{i18n>despList}" titleUppercase="false" >
+									<blocks>
+									<m:ScrollContainer id="_IDGenScrollContainer1" vertical="true" focusable="true" >
+										<t:Table 
+												id="despesas"
+												rows="{	path: '/DespesaSet' }"
+												selectionMode="MultiToggle"
+												ariaLabelledBy="title"
+												alternateRowColors="true"
+												sort="sortDeliveryDate"
+												filter="onFilterColumns">
+												<t:extension>
+													<m:OverflowToolbar style="Clear">
+														<m:ToolbarSpacer/>
+					                            		<m:Button icon="sap-icon://excel-attachment" press="onExport"/>
+													</m:OverflowToolbar>
+												</t:extension>
+												<t:columns>
+													<t:Column 	
+															sortProperty="Reinr"
+															autoResizable="true"
+															width="8em">
+														<m:Label text="{i18n>tabReemb}"/>
+														<t:template>
+															<m:ObjectIdentifier title="{Reinr}" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Pernr"
+															autoResizable="true"
+															width="8rem">
+														<m:Label text="{i18n>tabNumPe}" />
+														<t:template>
+															<m:ObjectIdentifier title="{Pernr}" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Bukrs"
+															autoResizable="true"
+															width="5rem">
+														<m:Label text="{i18n>tabEmpre}" />
+														<t:template>
+															<m:Text text="{Bukrs}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Status"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabStatu}" />
+														<t:template>
+															<m:ObjectNumber number="{ path: 'Status', formatter: '.formatter.formatStatus'}" 
+																		 	 state="{ path: 'Status', formatter: '.formatter.formatState'}"/>
+														</t:template>
+													</t:Column>
+													<t:Column
+															id="datum" 	
+															sortProperty="Datum"
+															autoResizable="true"
+															width="7rem">
+														<m:Label text="{i18n>tabDtCri}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datum', formatter: '.formatter.formatDate'}" wrapping="false" /> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datum', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Datre"
+															autoResizable="true"
+															width="7rem">
+														<m:Label text="{i18n>tabDtDes}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datre',  formatter: '.formatter.formatDate'}" wrapping="false"/> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datre', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Tpdes"
+															autoResizable="true"
+															width="7rem">
+														<m:Label text="{i18n>tabTpDes}" />
+														<t:template>
+															<m:Text text="{Tpdes}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column width="10rem">
+														<m:Label text="{i18n>tabDescr}" />
+														<t:template>
+															<m:Text text="{Descr}"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Valor"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabValor}" />
+														<t:template>
+															<m:ObjectNumber number="{Valor}" unit="€" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Datva"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabDtVal}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datva',  formatter: '.formatter.formatDate'}" wrapping="false"/> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datva', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Valid"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabValid}" />
+														<t:template>
+															<m:Text text="{Valid}" wrapping="false" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Datap"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabDtApr}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datap',  formatter: '.formatter.formatDate'}" wrapping="false"/> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datap', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Aprov"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabAprov}" />
+														<t:template>
+															<m:Text text="{Aprov}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Datrj"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabDtRej}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datrj',  formatter: '.formatter.formatDate'}" wrapping="false"/> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datrj', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Repro"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabRepro}" />
+														<t:template>
+															<m:Text text="{Repro}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Datca"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabDtCan}" />
+														<t:template>
+															<!-- <m:Text text="{ path: 'Datca',  formatter: '.formatter.formatDate'}" wrapping="false"/> -->
+															<m:Text 
+																text="{ 
+																	path: 'Datca', 
+																	type: 'sap.ui.model.type.Date',
+																	formatOptions: {
+																		pattern: 'dd-MM-yyyy',
+																		UTC: true 
+																	} 
+																}" 
+																wrapping="false" 
+															/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Cance"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabCance}" />
+														<t:template>
+															<m:Text text="{Cance}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Augdt"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabDtPag}" />
+														<t:template>
+															<m:Text text="{Augdt}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column width="10rem">
+														<m:Label text="{i18n>tabAnexo}" />
+														<t:template>
+															<m:Button icon="sap-icon://download" text="{i18n>tabAtt}" press=".onDownloadAttachments"/>
+														</t:template>
+													</t:Column>
+													
+													<t:Column 	
+															sortProperty="Entcov"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabEntCo}" />
+														<t:template>
+															<m:Text text="{Entcov}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Quacov"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabQuant}" />
+														<t:template>
+															<m:Text text="{Quacov}" wrapping="false" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Belnr"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabNbDoc}" />
+														<t:template>
+															<m:Text text="{Belnr}" wrapping="false" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="Gjahr"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabExerc}" />
+														<t:template>
+															<m:Text text="{Gjahr}" wrapping="false" />
+														</t:template>
+													</t:Column>
+													<t:Column 	
+															sortProperty="MotRej"
+															autoResizable="true"
+															width="10rem">
+														<m:Label text="{i18n>tabMotRej}" />
+														<t:template>
+															<m:Text text="{MotRej}" wrapping="false"/>
+														</t:template>
+													</t:Column>
+												</t:columns>
+										</t:Table>
+										</m:ScrollContainer>
+									</blocks>
+								</ObjectPageSubSection>
+							</subSections>
+						</ObjectPageSection>
+
+					</sections>
+				</ObjectPageLayout>
+			</l:mainContent>
+		</l:DynamicSideContent>
+		<m:footer>
+			<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button id="send" text="{i18n>envi}" type="Accept" press="onSend" />
+				<m:Button id="cancel" text="{i18n>dele}" type="Reject" press="onCanc" />
+				<!-- <m:Button id="edit" text="{i18n>edit}" press="onEdit" /> -->
+				<m:Button id="changeEmp" text="{i18n>ChangeEmp}" press=".onChangeEmp" visible="{EmployeeView>/EmpSec}" type="Emphasized"/>
+				<!-- <m:Button id="changeEmp" text="{i18n>ChangeEmp}" press=".onChangeEmp" visible="true" type="Emphasized"/> -->
+				<!-- <m:Button id="testeDownload" text="Teste Download" press=".onDownloadAttachments" visible="true" type="Emphasized"/> -->
+			</m:OverflowToolbar>
+		</m:footer>
+		</m:Page>
+</mvc:View>

@@ -1,0 +1,16 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" controllerName="zfioridespesa.controller.Despesa" >
+	<SelectDialog
+		id="selectEmployee"
+		contentHeight="40%"
+		contentWidth="50%"
+		resizable="true"
+		title="{i18n>empSelect}"
+		items="{/ChefiaListSet}"
+		search=".onVHSearch"
+		confirm=".onVHClose"
+		cancel=".onVHClose">
+		<StandardListItem id="chefiaList"
+			title="{Pernr}"
+			description="{Nome}" />
+	</SelectDialog>
+</core:FragmentDefinition>
